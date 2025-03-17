@@ -7,3 +7,7 @@ solana
 schedule
 matplotlib
 seaborn
+tqdm
+openai
+python-dotenv
+tkinter

@@ -2,7 +2,6 @@
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
-from data_preprocessor import preprocess_data, load_data
 
 def create_model(input_shape):
     model = Sequential()
@@ -10,14 +9,10 @@ def create_model(input_shape):
     model.add(Dropout(0.2))
     model.add(LSTM(50, return_sequences=False))
     model.add(Dropout(0.2))
-    model.add(Dense(25))
     model.add(Dense(1))
+    model.compile(optimizer='adam', loss='mean_squared_error')
     return model
 
-if __name__ == "__main__":
-    df = load_data()
-    X, y, scaler = preprocess_data(df)
-    model = create_model((X.shape[1], X.shape[2]))
-    model.compile(optimizer='adam', loss='mean_squared_error')
-    model.fit(X, y, epochs=50, batch_size=32)
-    model.save('trading_model.h5')
+def train_model(model, X_train, y_train, epochs=50, batch_size=32):
+    history = model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)
+    return history
