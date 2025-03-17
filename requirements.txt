@@ -1,0 +1,9 @@
+numpy
+pandas
+requests
+tensorflow
+scikit-learn
+solana
+schedule
+matplotlib
+seaborn

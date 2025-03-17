@@ -1,9 +1,11 @@
 # trading_bot.py
 
 from solana.rpc.api import Client
-from solana.transaction import Transaction
-from solana.publickey import PublicKey
-from solana.account import Account
+from solders.transaction import Transaction
+from solders.pubkey import Pubkey
+from solders.keypair import Keypair
+from solders.system_program import transfer, TransferParams
+from solders.message import Message
 from config import WALLET_ADDRESS, PRIVATE_KEY
 from model import create_model
 from data_preprocessor import preprocess_data, load_data
@@ -20,8 +22,8 @@ def predict_price(model, recent_data):
     return predicted_price
 
 def get_wallet_balance(client, wallet_address):
-    balance = client.get_balance(PublicKey(wallet_address))
-    return balance['result']['value'] / 10**9  # Convert lamports to SOL
+    balance = client.get_balance(Pubkey.from_string(wallet_address))
+    return balance['result']['value'] / 10**9  # Convertendo lamports para SOL
 
 def execute_trade(action, amount, client, wallet):
     if action == "buy":
@@ -33,7 +35,7 @@ def execute_trade(action, amount, client, wallet):
 
 if __name__ == "__main__":
     client = Client("https://api.mainnet-beta.solana.com")
-    wallet = Account(PRIVATE_KEY)
+    wallet = Keypair.from_base58_string(PRIVATE_KEY)
     model = load_model()
     df = load_data()
     X, _, scaler = preprocess_data(df)
