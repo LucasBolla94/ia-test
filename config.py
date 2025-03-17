@@ -12,3 +12,6 @@ PRIVATE_KEY = "SUA_PRIVATE_KEY"
 WINDOW_SIZE = 60  # Número de minutos considerados para cada previsão
 EPOCHS = 50
 BATCH_SIZE = 32
+
+# Configuração da API da OpenAI
+OPENAI_API_KEY = "SUA_OPENAI_API_KEY"
